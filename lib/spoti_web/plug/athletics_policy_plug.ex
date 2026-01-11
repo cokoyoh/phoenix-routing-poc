@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Plugs.AthleticsPolicyPlug do
+defmodule SpotiWeb.Plug.AthleticsPolicyPlug do
   import Plug.Conn
 
   @env Application.compile_env(:spoti_web, :env)
@@ -9,8 +9,11 @@ defmodule SpotiWeb.Plugs.AthleticsPolicyPlug do
     if SpotiWeb.RoutePolicies.AthleticsPolicy.allowed?(@env, name) do
       conn
     else
-      send_resp(conn, 404, "Not Found")
+      conn
+      |> send_resp(404, "Not Found")
       |> halt()
     end
   end
+
+  def call(conn, _opts), do: conn
 end

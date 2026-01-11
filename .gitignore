@@ -1,3 +1,5 @@
-.idea
-.vscode
-node_modules
+_build
+_config
+deps
+erl_crash.dump
+cover

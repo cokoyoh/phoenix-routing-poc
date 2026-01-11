@@ -1,6 +1,4 @@
 defmodule SpotiWeb.Plug.HeaderFirewall do
-  import Plug.Conn
-
   @allowed_headers ~w(accept accept-language)
 
   def init(opts), do: opts

@@ -1,20 +1,17 @@
 defmodule SpotiWeb.Forwarders.Forwarder do
   def forward(conn, target_url) do
-    url = target_url <> conn.request_path <> "?" <> conn.query_string
+    url =
+      target_url <>
+        conn.request_path <>
+        if(conn.query_string != "", do: "?" <> conn.query_string, else: "")
 
-    response =
-      HTTPoison.request!(
-        conn.method,
-        url,
-        conn.req_headers,
-        conn.body_params
+    resp =
+      Req.request!(
+        method: conn.method,
+        url: url,
+        headers: conn.req_headers
       )
 
-    Plug.Conn.send_resp(
-      conn,
-      response.status_code,
-      response.body
-    )
+    Plug.Conn.send_resp(conn, resp.status, resp.body)
   end
 end
-

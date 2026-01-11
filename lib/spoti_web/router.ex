@@ -1,9 +1,20 @@
-scope "/", SpotiWeb do
-  pipe_through :ingress
+defmodule SpotiWeb.Router do
+  use Phoenix.Router
 
-  get "/athletics", ForwardToWebcore
+  pipeline :ingress do
+    plug Plug.RequestId
+    plug SpotiWeb.Plug.HeaderFirewall
+    plug SpotiWeb.Plug.ServiceIdentity
+  end
 
-  get "/athletics/:name",
-    AthleticsPolicyPlug,
-    ForwardToWebcore
+  scope "/", nil do
+    pipe_through :ingress
+
+    get "/athletics", SpotiWeb.Plug.ForwardToWebcore, []
+
+    get "/athletics/:name",
+      SpotiWeb.Plug.AthleticsPolicyPlug,
+      SpotiWeb.Plug.ForwardToWebcore,
+      []
+  end
 end

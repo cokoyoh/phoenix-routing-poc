@@ -1,3 +1,5 @@
+import Config
+
 config :spoti_web,
   env: :test,
   allowed_hosts: ~r/.*\.test\.spoti\.co\.ke/,
