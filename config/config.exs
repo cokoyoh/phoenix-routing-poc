@@ -7,11 +7,11 @@
 # General application configuration
 import Config
 
-config :routing_poc,
+config :spoti_web,
   generators: [timestamp_type: :utc_datetime]
 
 # Configure the endpoint
-config :routing_poc, SpotiWeb.Endpoint,
+config :spoti_web, SpotiWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -28,7 +28,7 @@ config :routing_poc, SpotiWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :routing_poc, RoutingPoc.Mailer, adapter: Swoosh.Adapters.Local
+config :spoti_web, SpotiWeb.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure Elixir's Logger
 config :logger, :default_formatter,

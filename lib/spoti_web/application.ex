@@ -4,7 +4,6 @@ defmodule RoutingPoc.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      SpotiWeb.Telemetry,
       SpotiWeb.Endpoint
     ]
 

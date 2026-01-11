@@ -7,14 +7,15 @@ defmodule SpotiWeb.Router do
     plug SpotiWeb.Plug.ServiceIdentity
   end
 
-  scope "/", nil do
+  scope "/", SpotiWeb do
     pipe_through :ingress
 
-    get "/athletics", SpotiWeb.Plug.ForwardToWebcore, []
+    get "/", Plug.ForwardToWebcore, []
+
+    get "/athletics", Plug.ForwardToWebcore, []
 
     get "/athletics/:name",
-      SpotiWeb.Plug.AthleticsPolicyPlug,
-      SpotiWeb.Plug.ForwardToWebcore,
-      []
+      Plug.AthleticsPolicyPlug,
+      Plug.ForwardToWebcore
   end
 end
