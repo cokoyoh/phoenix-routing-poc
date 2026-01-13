@@ -12,13 +12,15 @@ defmodule Spoti.Router do
 
     get "/", Spoti.Webcore, []
 
-    get "/sample/route/1", Spoti.Webcore, []
     get "/sample/route/2", Spoti.Legacy, []
     get "/sample/route/3", Spoti.Releases.PlatformRelease, []
     get "/sample/route/5", Spoti.Releases.PreflightRelease, []
     get "/sample/route/6/:name", Spoti.Releases.EnvPathRelease, []
+
+    if Mix.env() == :test do
+      use Spoti.TestRoutes
+    end
   end
 
-  # HARD FAIL — everything else
   match :*, "/*path", Spoti.Plug.NotFound, []
 end
