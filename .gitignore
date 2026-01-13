@@ -3,3 +3,4 @@ _config
 deps
 erl_crash.dump
 cover
+.elixir_ls

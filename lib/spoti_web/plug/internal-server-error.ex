@@ -1,11 +1,11 @@
-defmodule SpotiWeb.Plug.NotFound do
+defmodule SpotiWeb.Plug.InternalServerError do
   import Plug.Conn
-  alias SpotiWeb.Errors.NotFound
+  alias SpotiWeb.Errors.InternalServerError
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    respond(conn, 404, NotFound)
+    respond(conn, 500, InternalServerError)
   end
 
   defp respond(conn, status, renderer) do
@@ -27,3 +27,4 @@ defmodule SpotiWeb.Plug.NotFound do
     end)
   end
 end
+

@@ -1,11 +1,11 @@
-defmodule SpotiWeb.Plug.NotFound do
+defmodule SpotiWeb.Plug.Forbidden do
   import Plug.Conn
-  alias SpotiWeb.Errors.NotFound
+  alias SpotiWeb.Errors.Forbidden
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    respond(conn, 404, NotFound)
+    respond(conn, 403, Forbidden)
   end
 
   defp respond(conn, status, renderer) do
@@ -22,8 +22,6 @@ defmodule SpotiWeb.Plug.NotFound do
   end
 
   defp wants_json?(conn) do
-    Enum.any?(get_req_header(conn, "accept"), fn accept ->
-      String.contains?(accept, "application/json")
-    end)
+    Enum.any?(get_req_header(conn, "accept"), &String.contains?(&1, "application/json"))
   end
 end
