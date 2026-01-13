@@ -1,11 +1,11 @@
 defmodule Spoti.Releases.EnvPathRelease do
   @behaviour Spoti.ReleasePlug
 
-  alias Spoti.EnvGate
-  alias Spoti.Release
-  alias Spoti.Forwarders.ForwardByStrategy
+  import Plug.Conn
 
-  @fallback :legacy
+  alias Spoti.EnvGate
+  alias Spoti.Forwarders.ForwardByStrategy
+  alias Spoti.Errors.NotFound
 
   @gates %{
     test: EnvGate.new(allow: ["alpha", "beta"]),
@@ -17,34 +17,28 @@ defmodule Spoti.Releases.EnvPathRelease do
   def call(%{params: %{"name" => name}} = conn, _opts) do
     env = conn.assigns.env
 
-    strategy =
-      Release.by_runtime(fn _name ->
-        if allowed?(env, name), do: :webcore, else: :legacy
-      end)
-
-    target =
-      try do
-        strategy.(env, name)
-      rescue
-        _ -> @fallback
-      end
-
-    ForwardByStrategy.forward(conn, target)
+    if allowed?(env, name) do
+      ForwardByStrategy.forward(conn, :webcore)
+    else
+      respond_404(conn)
+    end
   end
 
   def call(conn, _opts) do
-    # Defensive fallback if :name is missing
-    ForwardByStrategy.forward(conn, @fallback)
+    respond_404(conn)
   end
-
-  # -------------------------
-  # Internal
-  # -------------------------
 
   defp allowed?(env, name) do
     case Map.fetch(@gates, env) do
       {:ok, gate} -> EnvGate.allowed?(gate, name)
-      :error -> true
+      :error -> false
     end
+  end
+
+  defp respond_404(conn) do
+    conn
+    |> put_resp_content_type("text/html")
+    |> send_resp(404, NotFound.html())
+    |> halt()
   end
 end
