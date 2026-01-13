@@ -2,7 +2,7 @@ defmodule Spoti.Releases.EnvPathRelease do
   @behaviour Spoti.ReleasePlug
 
   alias Spoti.EnvGate
-  alias Spoti.ReleaseGates
+  alias Spoti.Release
   alias Spoti.Forwarders.ForwardByStrategy
 
   @fallback :legacy
@@ -15,13 +15,16 @@ defmodule Spoti.Releases.EnvPathRelease do
   def init(opts), do: opts
 
   def call(%{params: %{"name" => name}} = conn, _opts) do
+    env = conn.assigns.env
+
+    strategy =
+      Release.by_runtime(fn _name ->
+        if allowed?(env, name), do: :webcore, else: :legacy
+      end)
+
     target =
       try do
-        if ReleaseGates.allowed?(@gates, conn.assigns.env, name) do
-          :webcore
-        else
-          :legacy
-        end
+        strategy.(env, name)
       rescue
         _ -> @fallback
       end
@@ -30,7 +33,18 @@ defmodule Spoti.Releases.EnvPathRelease do
   end
 
   def call(conn, _opts) do
-    # defensive fallback if :name is missing
+    # Defensive fallback if :name is missing
     ForwardByStrategy.forward(conn, @fallback)
+  end
+
+  # -------------------------
+  # Internal
+  # -------------------------
+
+  defp allowed?(env, name) do
+    case Map.fetch(@gates, env) do
+      {:ok, gate} -> EnvGate.allowed?(gate, name)
+      :error -> true
+    end
   end
 end
