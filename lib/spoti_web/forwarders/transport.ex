@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Forwarders.Forwarder do
+defmodule SpotiWeb.Forwarders.Transport do
   def forward(conn, target_url) do
     url =
       target_url <>

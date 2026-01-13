@@ -1,9 +1,7 @@
-defmodule SpotiWeb.Forwarders.Legacy do
-  @target Application.compile_env(:spoti_web, :legacy_url)
+defmodule SpotiWeb.Forwarders.ForwardToLegacy do
+  def init(opts), do: opts
 
-  def forward(conn) do
-    conn
-    |> Plug.Conn.put_req_header("x-spoti-platform", "legacy")
-    |> SpotiWeb.Forwarders.Forwarder.forward(@target)
+  def call(conn, _opts) do
+    SpotiWeb.Forwarders.ForwardByStrategy.forward(conn, :legacy)
   end
 end

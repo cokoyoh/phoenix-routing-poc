@@ -1,11 +1,7 @@
-defmodule SpotiWeb.Forwarders.Webcore do
-  def forward(conn) do
-    target =
-      Application.fetch_env!(:spoti_web, :webcore_url)
+defmodule SpotiWeb.Forwarders.ForwardToWebcore do
+  def init(opts), do: opts
 
-    conn
-    |> Plug.Conn.put_req_header("x-spoti-platform", "webcore")
-    |> Plug.Conn.put_req_header("x-webcore-mode", "modern")
-    |> SpotiWeb.Forwarders.Forwarder.forward(target)
+  def call(conn, _opts) do
+    SpotiWeb.Forwarders.ForwardByStrategy.forward(conn, :webcore)
   end
 end
