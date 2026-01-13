@@ -1,10 +1,9 @@
 defmodule SpotiWeb.RoutePolicies.AthleticsPolicy do
-  @test_only ~w(gor-mahia couch-preview experimental)
+  @test_only MapSet.new(~w(gor-mahia couch-preview experimental))
 
-  def allowed?(env, name) do
-    case env do
-      :test -> true
-      :prod -> name not in @test_only
-    end
+  def allowed?(:test, _name), do: true
+
+  def allowed?(:prod, name) do
+    not MapSet.member?(@test_only, name)
   end
 end
