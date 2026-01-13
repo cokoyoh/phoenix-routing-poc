@@ -11,7 +11,7 @@ config :logger, level: :debug
 
 config :phoenix, :stacktrace_depth, 20
 
-config :spoti_web, SpotiWeb.Endpoint,
+config :spoti_web, Spoti.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   server: true,
   debug_errors: true,

@@ -1,4 +1,4 @@
-defmodule SpotiWeb.PreflightFetchers.FABL do
+defmodule Spoti.PreflightFetchers.FABL do
   @base_url Application.compile_env(:spoti_web, :fabl_base_url)
 
   def fetch(opts, _config) do

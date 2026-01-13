@@ -1,6 +1,6 @@
-defmodule SpotiWeb.Plug.InternalServerError do
+defmodule Spoti.Plug.InternalServerError do
   import Plug.Conn
-  alias SpotiWeb.Errors.InternalServerError
+  alias Spoti.Errors.InternalServerError
 
   def init(opts), do: opts
 
@@ -27,4 +27,3 @@ defmodule SpotiWeb.Plug.InternalServerError do
     end)
   end
 end
-

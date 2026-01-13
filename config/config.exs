@@ -11,11 +11,11 @@ config :spoti_web,
   generators: [timestamp_type: :utc_datetime]
 
 # Configure the endpoint
-config :spoti_web, SpotiWeb.Endpoint,
+config :spoti_web, Spoti.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: SpotiWeb.ErrorHTML, json: SpotiWeb.ErrorJSON],
+    formats: [html: Spoti.ErrorHTML, json: Spoti.ErrorJSON],
     layout: false
   ],
   pubsub_server: RoutingPoc.PubSub,
@@ -28,7 +28,7 @@ config :spoti_web, SpotiWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :spoti_web, SpotiWeb.Mailer, adapter: Swoosh.Adapters.Local
+config :spoti_web, Spoti.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure Elixir's Logger
 config :logger, :default_formatter,

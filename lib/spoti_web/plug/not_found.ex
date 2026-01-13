@@ -1,6 +1,6 @@
-defmodule SpotiWeb.Plug.NotFound do
+defmodule Spoti.Plug.NotFound do
   import Plug.Conn
-  alias SpotiWeb.Errors.NotFound
+  alias Spoti.Errors.NotFound
 
   def init(opts), do: opts
 

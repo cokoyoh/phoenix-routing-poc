@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Release do
+defmodule Spoti.Release do
   @type target :: :webcore | :legacy
 
   def static(target), do: fn _env, _data -> target end

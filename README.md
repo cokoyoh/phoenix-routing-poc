@@ -28,7 +28,7 @@ Routes describe *intent*, not mechanics.
 Good:
 
 ```elixir
-get "/sample/route/5", SpotiWeb.Releases.Route5Release
+get "/sample/route/5", Spoti.Releases.Route5Release
 ```
 
 Better (after rollout):
@@ -100,7 +100,7 @@ A **ReleasePlug**:
 * never crashes upstream
 
 ```elixir
-@behaviour SpotiWeb.ReleasePlug
+@behaviour Spoti.ReleasePlug
 ```
 
 ---
@@ -218,7 +218,7 @@ get "/sample/route/1", ForwardToWebcore
 ### Route 3 — env split
 
 ```elixir
-get "/sample/route/3", SpotiWeb.Releases.Route3Release
+get "/sample/route/3", Spoti.Releases.Route3Release
 ```
 
 ---
@@ -226,7 +226,7 @@ get "/sample/route/3", SpotiWeb.Releases.Route3Release
 ### Route 5 — env then FABL
 
 ```elixir
-get "/sample/route/5", SpotiWeb.Releases.Route5Release
+get "/sample/route/5", Spoti.Releases.Route5Release
 ```
 
 Promotion:
@@ -240,7 +240,7 @@ get "/sample/route/5", ForwardToWebcore
 ### Route 6 — env allow/deny
 
 ```elixir
-get "/sample/route/6/:name", SpotiWeb.Releases.Route6Release
+get "/sample/route/6/:name", Spoti.Releases.Route6Release
 ```
 
 Behaviour:

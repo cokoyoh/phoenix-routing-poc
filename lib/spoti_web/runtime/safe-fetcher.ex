@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Runtime.SafeFetch do
+defmodule Spoti.Runtime.SafeFetch do
   @timeout 150
 
   def fetch(fetcher, opts) do

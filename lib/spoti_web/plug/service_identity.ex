@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Plug.ServiceIdentity do
+defmodule Spoti.Plug.ServiceIdentity do
   import Plug.Conn
 
   def init(opts), do: opts
@@ -19,7 +19,7 @@ defmodule SpotiWeb.Plug.ServiceIdentity do
         |> put_req_header("authorization", "Bearer MOCK_SERVICE_TOKEN")
 
       :error ->
-        SpotiWeb.Plug.PolicyFailure.internal_error(conn)
+        Spoti.Plug.PolicyFailure.internal_error(conn)
     end
   end
 

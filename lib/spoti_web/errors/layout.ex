@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Errors.Layout do
+defmodule Spoti.Errors.Layout do
   def render(title, message) do
     """
     <!DOCTYPE html>

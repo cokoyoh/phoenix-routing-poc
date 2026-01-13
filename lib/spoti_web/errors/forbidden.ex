@@ -1,6 +1,6 @@
-defmodule SpotiWeb.Errors.Forbidden do
+defmodule Spoti.Errors.Forbidden do
   def html do
-    SpotiWeb.Errors.Layout.render(
+    Spoti.Errors.Layout.render(
       "403 — Forbidden",
       "You are not allowed to access this resource."
     )

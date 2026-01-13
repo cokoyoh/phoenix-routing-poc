@@ -56,15 +56,15 @@ It is **only** input to code generation.
 ## 1.3 Generator output (what gets created)
 
 ```elixir
-defmodule SpotiWeb.Releases.Route5Release do
-  @behaviour SpotiWeb.ReleasePlug
+defmodule Spoti.Releases.Route5Release do
+  @behaviour Spoti.ReleasePlug
 
-  alias SpotiWeb.EnvGate
-  alias SpotiWeb.ReleaseGates
-  alias SpotiWeb.Runtime.SafeFetch
-  alias SpotiWeb.PreflightFetchers.FABL
-  alias SpotiWeb.Release
-  alias SpotiWeb.ForwardByStrategy
+  alias Spoti.EnvGate
+  alias Spoti.ReleaseGates
+  alias Spoti.Runtime.SafeFetch
+  alias Spoti.PreflightFetchers.FABL
+  alias Spoti.Release
+  alias Spoti.ForwardByStrategy
 
   @fallback :legacy
 

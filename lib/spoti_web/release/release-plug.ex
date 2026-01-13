@@ -1,4 +1,4 @@
-defmodule SpotiWeb.ReleasePlug do
+defmodule Spoti.ReleasePlug do
   @moduledoc """
   Contract for route-level release orchestration.
   """

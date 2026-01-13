@@ -1,4 +1,4 @@
-defmodule SpotiWeb.EnvGate do
+defmodule Spoti.EnvGate do
   defstruct allow: MapSet.new()
 
   def new(opts) do

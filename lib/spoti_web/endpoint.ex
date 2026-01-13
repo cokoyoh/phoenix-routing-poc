@@ -1,7 +1,7 @@
-defmodule SpotiWeb.Endpoint do
+defmodule Spoti.Endpoint do
   use Phoenix.Endpoint, otp_app: :spoti_web
 
   plug Plug.RequestId
   plug Plug.Logger
-  plug SpotiWeb.Router
+  plug Spoti.Router
 end

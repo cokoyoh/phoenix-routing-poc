@@ -1,6 +1,6 @@
-defmodule SpotiWeb.Errors.NotFound do
+defmodule Spoti.Errors.NotFound do
   def html do
-    SpotiWeb.Errors.Layout.render(
+    Spoti.Errors.Layout.render(
       "404 — Page not found",
       "The page you requested does not exist."
     )

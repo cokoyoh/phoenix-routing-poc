@@ -1,9 +1,9 @@
-defmodule SpotiWeb.Plug.PolicyFailure do
+defmodule Spoti.Plug.PolicyFailure do
   def not_found(conn) do
-    SpotiWeb.Plug.NotFound.call(conn, [])
+    Spoti.Plug.NotFound.call(conn, [])
   end
 
   def internal_error(conn) do
-    SpotiWeb.Plug.InternalServerError.call(conn, [])
+    Spoti.Plug.InternalServerError.call(conn, [])
   end
 end

@@ -1,6 +1,6 @@
-defmodule SpotiWeb.Plug.Forbidden do
+defmodule Spoti.Plug.Forbidden do
   import Plug.Conn
-  alias SpotiWeb.Errors.Forbidden
+  alias Spoti.Errors.Forbidden
 
   def init(opts), do: opts
 

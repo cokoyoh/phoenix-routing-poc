@@ -7,6 +7,6 @@ config :spoti_web,
   legacy_url: "https://legacy.live.spoti.co.ke",
   fabl_base_url: "https://fabl.live.api.spoti.co.ke"
 
-config :spoti_web, SpotiWeb.Endpoint,
+config :spoti_web, Spoti.Endpoint,
   http: [ip: {0, 0, 0, 0}, port: 4000],
   server: true

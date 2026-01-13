@@ -1,4 +1,4 @@
-defmodule SpotiWeb.Forwarders.ForwardByStrategy do
+defmodule Spoti.Forwarders.ForwardByStrategy do
   import Plug.Conn
 
   @targets %{
@@ -9,7 +9,7 @@ defmodule SpotiWeb.Forwarders.ForwardByStrategy do
   def forward(conn, target) do
     conn
     |> add_platform_headers(target)
-    |> SpotiWeb.Forwarders.Transport.forward(@targets[target])
+    |> Spoti.Forwarders.Transport.forward(@targets[target])
   end
 
   defp add_platform_headers(conn, :webcore) do
