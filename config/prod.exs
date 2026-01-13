@@ -10,3 +10,7 @@ config :spoti_web,
 config :spoti_web, Spoti.Endpoint,
   http: [ip: {0, 0, 0, 0}, port: 4000],
   server: true
+
+config :logger, :default_formatter,
+  format: "[$level] $message $metadata\n",
+  metadata: [:request_id, :url, :query, :method, :status, :env, :target, :body, :data, :reason, :timeout]

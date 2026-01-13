@@ -1,17 +1,27 @@
 defmodule Spoti.Forwarders.Transport do
-  def forward(conn, target_url) do
-    url =
-      target_url <>
-        conn.request_path <>
-        if(conn.query_string != "", do: "?" <> conn.query_string, else: "")
+  require Logger
+  import Plug.Conn
 
-    resp =
-      Req.request!(
-        method: conn.method,
-        url: url,
-        headers: conn.req_headers
-      )
+  def forward(conn, url) do
+    case Req.request(
+           method: conn.method,
+           url: url,
+           headers: conn.req_headers,
+           body: conn.assigns[:raw_body]
+         ) do
+      {:ok, %Req.Response{status: status, body: body}} ->
+        conn
+        |> put_resp_content_type("text/html")
+        |> send_resp(status, body)
 
-    Plug.Conn.send_resp(conn, resp.status, resp.body)
+      {:error, reason} ->
+        Logger.error("""
+        Downstream request failed
+        url=#{url}
+        reason=#{inspect(reason)}
+        """)
+
+        Spoti.Plug.PolicyFailure.internal_error(conn)
+    end
   end
 end

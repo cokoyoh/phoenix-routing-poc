@@ -10,6 +10,8 @@ defmodule Spoti.Router do
   scope "/" do
     pipe_through :ingress
 
+    get "/", Spoti.Webcore, []
+
     get "/sample/route/1", Spoti.Webcore, []
     get "/sample/route/2", Spoti.Legacy, []
     get "/sample/route/3", Spoti.Releases.PlatformRelease, []

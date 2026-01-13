@@ -16,3 +16,7 @@ config :spoti_web, Spoti.Endpoint,
   server: true,
   debug_errors: true,
   code_reloader: true
+
+config :logger, :default_formatter,
+  format: "$time [$level] $message $metadata\n",
+  metadata: [:request_id, :url, :query, :method, :body, :data, :status, :env, :target, :reason, :timeout, :kind, :error, :stacktrace]
