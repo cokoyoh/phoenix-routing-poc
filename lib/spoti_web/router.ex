@@ -10,12 +10,17 @@ defmodule SpotiWeb.Router do
   scope "/", SpotiWeb do
     pipe_through :ingress
 
-    get "/", Plug.ForwardToWebcore, []
+    scope "/", as: :webcore do
+      get "/", Plug.ForwardToWebcore, []
 
-    get "/athletics", Plug.ForwardToWebcore, []
+      get "/athletics", Plug.ForwardToWebcore, []
 
-    get "/athletics/:name",
-      Plug.AthleticsPolicyPlug,
-      Plug.ForwardToWebcore
+      get "/athletics/:name",
+        Plug.AthleticsPolicyPlug,
+        Plug.ForwardToWebcore
+    end
   end
+
+  # HARD FAIL: everything else
+  match :*, "/*path", SpotiWeb.Plug.NotFound, []
 end
