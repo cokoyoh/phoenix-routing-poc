@@ -6,51 +6,35 @@ defmodule Spoti.Releases.PreflightRelease do
 
   alias Spoti.Runtime.SafeFetch
   alias Spoti.PreflightFetchers.FABL
+  alias Spoti.Release
   alias Spoti.Errors.InternalServerError
+  alias Spoti.Forwarders.ForwardByStrategy
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
     env = conn.assigns.env
 
+    strategy =
+      Release.by_runtime(fn data ->
+        if data["isProd"] == true, do: :webcore, else: :legacy
+      end)
+
     case SafeFetch.fetch(FABL, module: "example-dependency", conn: conn) do
       {:ok, data} ->
-        route(conn, env, data)
+        target = strategy.(env, data)
+        ForwardByStrategy.forward(conn, target)
 
       :error ->
         Logger.error("Release preflight failed — aborting request",
           request_id: request_id(conn),
-          env: env
+          env: env,
+          release: __MODULE__
         )
 
         respond_500(conn)
     end
   end
-
-  # -------------------------
-  # Routing
-  # -------------------------
-
-  defp route(conn, env, data) do
-    target =
-      if data["isProd"] == true do
-        :webcore
-      else
-        :legacy
-      end
-
-    Logger.info("Routing decision",
-      request_id: request_id(conn),
-      env: env,
-      target: target
-    )
-
-    Spoti.Forwarders.ForwardByStrategy.forward(conn, target)
-  end
-
-  # -------------------------
-  # Failure response
-  # -------------------------
 
   defp respond_500(conn) do
     conn
